@@ -1,42 +1,37 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { Loader } from "components/Loader/Loader";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchContacts } from "redux/operations";
+import { selectContacts, selectFilter } from "redux/selectors";
+import { MdOutlineError } from "react-icons/md";
 
 import css from './ContactList.module.css';
-import { deleteContacts } from 'redux/contactsOperation';
-const ContactList = ({ filter }) => {
+
+import { ContactListItem } from "./ContactListItem";
+
+export const ContactList = () => {
+    const { items, isLoading, error } = useSelector(selectContacts);
+    const filter = useSelector(selectFilter);
     const dispatch = useDispatch();
 
+    const normalizedFilter = filter.toLowerCase();
+    const filteredContacts = items.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
+
+    useEffect(() => {
+        dispatch(fetchContacts());
+    }, [dispatch]);
+
     return (
-        <ul className={css.list}>
-            {filter.length > 0 &&
-                filter.map(({ id, name, phone }) => (
-                    <li className={css.item} key={id}>
-                        <p className={css.text}>
-                            {name}: {phone}
-                        </p>
-                        <button
-                            className={css.btnDelete}
-                            type="button"
-                            onClick={() => {
-                                dispatch(deleteContacts(id));
-                            }}
-                        >
-                            Delete
-                        </button>
-                    </li>
-                ))}
+        <ul className={css.contacts__list}>
+            {isLoading && <Loader />}
+            {error && <div className={css.error}><MdOutlineError className={css.error_icon} /> {error}</div>}
+            {filteredContacts.length > 0 &&
+                filteredContacts.map(contact =>
+                    <ContactListItem
+                        contact={contact}
+                        key={contact.id}
+                    />
+                )}
         </ul>
     );
-};
-ContactList.prototype = {
-    filter: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            number: PropTypes.number.isRequired,
-        })
-    ),
-    onDeleteContact: PropTypes.func.isRequired,
-};
-export default ContactList;
+}

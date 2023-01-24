@@ -1,24 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { filterContacts } from 'redux/filterSlice';
+import { selectFilter } from "redux/selectors";
 import css from './Filter.module.css';
 
-const Filter = ({ filter }) => {
+export const Filter = () => {
+    const filter = useSelector(selectFilter);
+    const dispatch = useDispatch();
+
+    const changeFilter = event => {
+        dispatch(filterContacts(event.currentTarget.value));
+    };
+
     return (
-        <>
-            <p className={css.title}>Find contacts by name</p>
+        <label>
             <input
-                className={css.input}
                 type="text"
-                name="filter"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                onChange={filter}
+                value={filter}
+                onChange={changeFilter}
+                className={css.filterInput}
             />
-        </>
+        </label>
     );
 };
-
-Filter.prototype = {
-    filter: PropTypes.func.isRequired,
-};
-export default Filter;

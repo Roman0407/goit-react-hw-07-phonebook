@@ -1,4 +1,4 @@
-.list {
+/* .list {
     width: 320px;
     margin: 0;
     padding: 0;
@@ -26,4 +26,31 @@
 .btnDelete:hover,
 .btnDelete:focus {
     background-color: #b5ddf2;
+} */
+
+.contacts__list {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    list-style: inside;
+    font-size: 20px;
+    /* border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255); */
+    color: rgb(17, 5, 71);
+    /* -webkit-box-shadow: 0px 2px 4px 0px rgba(1, 10, 64, 0.58);
+    -moz-box-shadow: 0px 2px 4px 0px rgba(1, 10, 64, 0.58);
+    box-shadow: 0px 2px 4px 0px rgba(1, 10, 64, 0.58); */
+}
+
+.error {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    color: #001ead;
+}
+
+.error_icon {
+    margin-bottom: -5px;
 }
