@@ -11,11 +11,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    /* background-color: bisque; */
-    background: rgb(24, 221, 249);
-    background: linear-gradient(0deg, rgba(24, 221, 249, 1) 0%, rgba(0, 30, 173, 1) 100%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+   
 }
 
 code {
